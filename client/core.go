@@ -153,9 +153,9 @@ func (c *BaseClient) Do(req *Request) (*Response, error) {
 
 		// consume any response to reuse the connection
 		if doErr == nil {
-			err := drainBody(resp.Body)
-			if err != nil {
-				logger.WithError(err).Error("error reading response body")
+			drainBodyErr := drainBody(resp.Body)
+			if drainBodyErr != nil {
+				logger.WithError(drainBodyErr).Error("error reading response body")
 			}
 		}
 
@@ -212,9 +212,9 @@ func (c *BaseClient) Do(req *Request) (*Response, error) {
 
 	// consume the response
 	if resp != nil {
-		err = drainBody(resp.Body)
-		if err != nil {
-			logger.WithError(err).Error("error reading response body")
+		drainBodyErr := drainBody(resp.Body)
+		if drainBodyErr != nil {
+			logger.WithError(drainBodyErr).Error("error reading response body")
 		}
 	}
 

@@ -17,16 +17,15 @@ func drainBody(body io.ReadCloser) error {
 
 // getBodyReader encodes the payload into the body reader
 // and returns it
-func getBodyReader(rawBody interface{}) (io.ReadWriter, error) {
-	var bodyReader io.ReadWriter
+func getBodyReader(rawBody interface{}) (io.Reader, error) {
+	var bodyReader io.Reader
 
 	if rawBody != nil {
-		bodyReader = new(bytes.Buffer)
-		enc := json.NewEncoder(bodyReader)
-		err := enc.Encode(rawBody)
+		requestByte, err := json.Marshal(rawBody)
 		if err != nil {
 			return nil, err
 		}
+		bodyReader = bytes.NewReader(requestByte)
 	}
 	return bodyReader, nil
 }

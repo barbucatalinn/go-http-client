@@ -36,10 +36,10 @@ func (r *Response) GetHeaders() http.Header {
 
 // GetBody returns the body as []byte array
 func (r *Response) GetBody() ([]byte, error) {
-	defer r.RawResponse.Body.Close()
 	if r.RawResponse == nil {
 		return []byte{}, nil
 	}
+	defer r.RawResponse.Body.Close()
 	return ioutil.ReadAll(r.RawResponse.Body)
 }
 
@@ -52,11 +52,11 @@ func (r *Response) GetStringBody() (string, error) {
 	return string(b), nil
 }
 
-// UnmarshalJson unmarshalls the response body into the provided target object
-func (r *Response) UnmarshalJson(target interface{}) error {
+// UnmarshalJSON unmarshalls the response body into the provided target object
+func (r *Response) UnmarshalJSON(target interface{}) error {
 	b, err := r.GetBody()
 	if err != nil {
 		return err
 	}
-	return json.Unmarshal(b, target)
+	return json.Unmarshal(b, &target)
 }

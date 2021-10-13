@@ -47,15 +47,15 @@ func ExponentialBackoffStrategy(i int) time.Duration {
 	return time.Duration(1<<uint(i)) * time.Second
 }
 
+// LinearBackoffStrategy returns increasing durations, each a second longer than the last
+func LinearBackoffStrategy(i int) time.Duration {
+	return time.Duration(i) * time.Second
+}
+
 // ExponentialJitterBackoffStrategy returns ever-increasing backoffs by a power of 2
 // with +/- 0-33% to prevent synchronized requests
 func ExponentialJitterBackoffStrategy(i int) time.Duration {
 	return jitter(int(1 << uint(i)))
-}
-
-// LinearBackoffStrategy returns increasing durations, each a second longer than the last
-func LinearBackoffStrategy(i int) time.Duration {
-	return time.Duration(i) * time.Second
 }
 
 // LinearJitterBackoffStrategy returns increasing durations, each a second longer than the last

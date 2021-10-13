@@ -1,15 +1,19 @@
 package client
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 )
 
 // Request wraps the metadata needed to create HTTP requests
 type Request struct {
-	body io.ReadWriter
+	body io.Reader
+
+	contentLength int64
 
 	*http.Request
 }
@@ -29,15 +33,23 @@ func (c *BaseClient) NewRequest(ctx context.Context, method, url string, rawBody
 	}
 
 	// set the content length
+	var contentLength int64
 	if method != http.MethodGet && method != http.MethodDelete && rawBody != nil {
-		cl, err := getContentLength(bodyReader)
+		b, err := ioutil.ReadAll(bodyReader)
 		if err != nil {
 			return nil, err
 		}
-		req.ContentLength = cl
+		contentLengthReader := bytes.NewReader(b)
+
+		contentLength, err = getContentLength(contentLengthReader)
+		if err != nil {
+			return nil, err
+		}
+
+		bodyReader = bytes.NewReader(b)
 	}
 
-	return &Request{bodyReader, req}, nil
+	return &Request{bodyReader, contentLength, req}, nil
 }
 
 // SetHeader method is to set a single header key/value pair
