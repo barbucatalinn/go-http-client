@@ -6,10 +6,11 @@ package client
 import (
 	"context"
 	"fmt"
-	"github.com/sirupsen/logrus"
-	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
+
+	"github.com/sirupsen/logrus"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestBaseClient_Get(t *testing.T) {
