@@ -47,7 +47,7 @@ func completeExample() {
 
 	var rsp apiResponse
 
-	err = result.UnmarshalJSON(rsp)
+	err = result.UnmarshalJSONResponse(rsp)
 	if err != nil {
 		panic(rsp)
 	}

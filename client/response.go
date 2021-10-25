@@ -52,8 +52,8 @@ func (r *Response) GetStringBody() (string, error) {
 	return string(b), nil
 }
 
-// UnmarshalJSON unmarshalls the response body into the provided target object
-func (r *Response) UnmarshalJSON(target interface{}) error {
+// UnmarshalJSONResponse unmarshalls the response body into the provided target object
+func (r *Response) UnmarshalJSONResponse(target interface{}) error {
 	b, err := r.GetBody()
 	if err != nil {
 		return err

@@ -44,7 +44,7 @@ func TestBaseClient_Get(t *testing.T) {
 		}
 		var p product
 
-		err = response.UnmarshalJSON(&p)
+		err = response.UnmarshalJSONResponse(&p)
 		assert.Nil(t, err)
 		assert.Equal(t, product{"code 1", "name 1"}, p)
 	})

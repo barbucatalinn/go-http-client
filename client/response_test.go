@@ -263,7 +263,7 @@ func TestResponse_UnmarshalJSON(t *testing.T) {
 				RawResponse: tt.fields.RawResponse,
 				DataDump:    tt.fields.DataDump,
 			}
-			if err := r.UnmarshalJSON(tt.args.target); (err != nil) != tt.wantErr {
+			if err := r.UnmarshalJSONResponse(tt.args.target); (err != nil) != tt.wantErr {
 				t.Errorf("UnmarshalJson() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
