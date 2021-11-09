@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  client:
+    build:
+      context: .
+      dockerfile: local.Dockerfile
+    volumes:
+      - .:/code
+      - .cache/mod:/go/pkg/mod
+    working_dir: /code
